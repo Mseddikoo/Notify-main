@@ -1,0 +1,45 @@
+@Notify_HostAddress = http://localhost:5065
+
+### Health Check Probe
+GET {{Notify_HostAddress}}/health
+Accept: text/plain
+
+###
+
+### Send Email Notification (Dispatches email asynchronously and returns 202 Accepted)
+POST {{Notify_HostAddress}}/email
+Content-Type: application/json
+
+{
+  "messageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "to": "recipient@example.com",
+  "subject": "Order Confirmation",
+  "body": "<h1>Thank you for your order!</h1><p>Your items are being prepared.</p>"
+}
+
+###
+
+### Get Email Trace Status
+GET {{Notify_HostAddress}}/email/3fa85f64-5717-4562-b3fc-2c963f66afa6
+Accept: application/json
+
+###
+
+### Send SMS Notification (Dispatches SMS asynchronously and returns 202 Accepted)
+POST {{Notify_HostAddress}}/sms
+Content-Type: application/json
+
+{
+  "messageId": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+  "mobile": "+1234567890",
+  "message": "Your verification code is: 123456"
+}
+
+###
+
+### Get SMS Trace Status
+GET {{Notify_HostAddress}}/sms/9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+Accept: application/json
+
+###
+
